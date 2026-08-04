@@ -1,6 +1,6 @@
 "use client"
 
-import { Bell, Search, ChevronDown } from "lucide-react"
+import { Bell, Search, ChevronDown, Menu } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
@@ -18,11 +18,40 @@ export function DashboardTopbar({
   role,
   onRoleChange,
   onNavigate,
+  activeTab,
+  sidebarOpen = true,
+  onToggleSidebar,
+  onToggleMobileSidebar,
 }) {
   const meta = roleMeta[role] || roleMeta.student
 
   return (
     <header className="flex h-16 w-full items-center justify-between gap-3 border-b border-border bg-card/60 px-4 backdrop-blur md:px-6">
+      {/* Sidebar Toggle Button (Desktop & Mobile) */}
+      <div className="flex items-center gap-2">
+        {/* Desktop Sidebar Toggle Button */}
+        <button
+          type="button"
+          onClick={onToggleSidebar}
+          className="hidden lg:flex h-9.5 w-9.5 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 transition-colors cursor-pointer"
+          aria-label="Toggle Sidebar"
+          title={sidebarOpen ? "Close Sidebar" : "Open Sidebar"}
+        >
+          <Menu className="h-5 w-5" />
+        </button>
+
+        {/* Mobile Sidebar Hamburger Trigger */}
+        <button
+          type="button"
+          onClick={onToggleMobileSidebar}
+          className="flex lg:hidden h-9.5 w-9.5 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 transition-colors cursor-pointer"
+          aria-label="Open Mobile Sidebar Menu"
+        >
+          <Menu className="h-5 w-5" />
+        </button>
+      </div>
+
+      {/* Search Input (Desktop) */}
       <div className="relative hidden max-w-md flex-1 md:block">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
@@ -53,7 +82,7 @@ export function DashboardTopbar({
           </DropdownMenuContent>
         </DropdownMenu>
 
-        {/* Notifications button with interactive dropdown */}
+        {/* Notifications button */}
         <DropdownMenu>
           <DropdownMenuTrigger
             className="relative flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200/90 bg-slate-50/80 text-slate-600 transition-colors hover:bg-slate-100 focus:outline-none dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-300 dark:hover:bg-slate-800/80 cursor-pointer"
